@@ -6,12 +6,19 @@ YAML into a website (and the backend behind it).
 
 | Repository | Role | The toolkit uses |
 | --- | --- | --- |
-| [Jade Vault](https://github.com/lucky-edgelord/jade-vault) | control plane: agent loop, schedules, approvals, the person | HTTP API `/v1` |
+| [Jade Vault](https://github.com/lucky-edgelord/jade-vault) | control plane: agent loop, schedules, approvals, the person; Jade's avatar is a PNGtuber by default since 2.29 (Live2D optional) | HTTP API `/v1` |
 | [Jade Agent Base](https://github.com/lucky-edgelord/jade-agent-base) | resource plane: identity, database, model gateway, billing, audit log | REST and MCP |
 | [Jade Agent Kit](https://github.com/lucky-edgelord/Jade-agent-kit) | the embeddable subset of Vault: an agent in any web page | a page that loads it |
 | [Jade Agent UI/UX](https://github.com/lucky-edgelord/Jade-agent-ui-ux) | presentation: web components and themes, in Jade's Vault look | HTML that loads them |
 | [jade-vn-engine](https://github.com/lucky-edgelord/jade-vn-engine) | games: Ren'Py-style visual novels with MicroPython, tile maps, battles, tours, Live2D | its own compiler and packager, at a pinned commit |
 | [jade-edu](https://github.com/lucky-edgelord/jade-edu) | courses: a talking teacher, quizzes and runnable labs from one JSON file | `<jade-course>` from the CDN, and its validator |
+
+**Related projects** (not driven by the toolkit, but part of the same family):
+
+- [Jade Fleet](https://github.com/lucky-edgelord/jade-fleet): a small broker that lets phones and browsers share one Vault, run real `bash`, `python3` and `node`, and reach the models. Vault builds its client (`dist/jade-fleet.html`, the Jade Fleet APK).
+- Inside Jade Vault: **Vault Loci** (the vault as a memory palace map) and **Jade Link** (a messenger and shared board), both built-in [webxdc](https://webxdc.org) apps; the Vector and Discord messenger bridges (`jade-vector`, `jade-discord`).
+- Inside jade-vn-engine: the sample games, including *Jade's Vault* and *Sucker for Love*, and its [gallery](https://github.com/lucky-edgelord/jade-vn-engine#gallery) of every mode.
+- The games and courses use [webxdc](https://webxdc.org) as their offline format: a `.xdc` runs in Vault's Apps tab, in Jade Link, or inside a jade-edu lab.
 
 The toolkit is a client, not a fork: it speaks to them only through those interfaces, and it needs the network to reach
 them. Vault asks, Base answers, Base logs, Base can say no.
