@@ -11,7 +11,7 @@ A target with another major version is refused (JADE203); an older minor is a wa
 | base | `lucky-edgelord/jade-agent-base` | 0.6.0 | REST /api/agent/tools, MCP /api/agent/mcp, /api/agent/credentials |
 | vault | `lucky-edgelord/jade-vault` | 2.18.3 | HTTP API /v1 (api 1), header-only auth |
 | kit | `lucky-edgelord/Jade-agent-kit` | 3.1.0 | JS embed (ES module from a CDN) |
-| ui | `lucky-edgelord/Jade-agent-ui-ux` | 1.2.0 | web components (ES module from a CDN) |
+| ui | `lucky-edgelord/Jade-agent-ui-ux` | 1.3.0 | web components in Jade's Vault look (ES module from a CDN) |
 | vn | `lucky-edgelord/jade-vn-engine` | 0.1.0 | ES modules from a CDN + vnc.py compiler (Ren'Py-style scripts on MicroPython) |
 | edu | `lucky-edgelord/jade-edu` | 0.1.0 | ES module from a CDN (<jade-course>, course JSON) |
 | stack | `lucky-edgelord/jade-agent-stack` | 0.1.0 | this package |
@@ -26,8 +26,8 @@ them at the commits in the table below. The canonical Kit is `lucky-edgelord/Jad
 | Module | URL |
 | --- | --- |
 | kit | `https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-kit@v3.1.0/dist/jade-agent-kit.js` |
-| ui | `https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-ui-ux@v1.2.0/dist/jade-ui.js` |
-| vn | `https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-vn-engine@fe61a50/engine/vn.js` |
+| ui | `https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-ui-ux@929fe39/dist/jade-ui.js` |
+| vn | `https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-vn-engine@84ce781/engine/vn.js` |
 | edu | `https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-edu@82e877f/src/edu.js` |
 
 ## What the CLI builds with (one commit each)
@@ -36,7 +36,8 @@ them at the commits in the table below. The canonical Kit is `lucky-edgelord/Jad
 
 | Part | Commit |
 | --- | --- |
-| vn | `lucky-edgelord/jade-vn-engine@fe61a5095b6d37657b1ab243db5c1b28f4803829` |
+| ui | `lucky-edgelord/Jade-agent-ui-ux@929fe39282c56e65a1ab9c7f5bf609179613ae53` |
+| vn | `lucky-edgelord/jade-vn-engine@84ce781240c878fc0cba4519db33a43716cbbacd` |
 | edu | `lucky-edgelord/jade-edu@82e877ff5c825eff5af4707ace892e48a39bf740` |
 
 ## Python dependencies (one pin each)

@@ -1,5 +1,5 @@
 about: A one-page product landing site (no backend needed).
-theme: sunset
+theme: jade
 pages:
   - path: /
     title: Home

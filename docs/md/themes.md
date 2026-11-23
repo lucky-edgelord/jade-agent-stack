@@ -10,7 +10,8 @@ version: 0.1.0
 
 | Theme | Font | Description |
 | --- | --- | --- |
-| `jade` | None | Calm green on near-white; the Jade default |
+| `jade` | None | Jade's own look from Jade Vault: netrunner green on void black, cut corners, Rajdhani, Chakra Petch and JetBrains Mono, grid and scanlines |
+| `classic` | None | Calm green on near-white; the old jade palette |
 | `midnight` | Inter | Indigo on deep navy |
 | `paper` | Fraunces | Warm paper, rust accent, a serif for headings |
 | `contrast` | None | Maximum contrast for readability |

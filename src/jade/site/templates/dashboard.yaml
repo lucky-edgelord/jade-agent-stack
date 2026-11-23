@@ -1,5 +1,5 @@
 about: An analytics dashboard built from a surface spec (KPIs, charts, a sortable table), with sign-in.
-theme: slate
+theme: jade
 pages:
   - path: /
     title: Dashboard

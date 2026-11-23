@@ -5,7 +5,7 @@ name: Nimbus AI
 tagline: Embeddings, chat and search for your app, billed by the token.
 demo: true
 template: saas
-theme: ocean
+theme: jade
 backend:
   plans:
     - {name: free, price_month: 0, monthly_tokens: 200000, rpm: 20, default: true, description: Try it out}

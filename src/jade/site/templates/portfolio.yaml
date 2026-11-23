@@ -1,5 +1,5 @@
 about: A personal portfolio with work, a gallery and a contact form.
-theme: mono
+theme: jade
 backend:
   rate_limits: true
   collections:
