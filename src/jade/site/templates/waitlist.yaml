@@ -1,5 +1,5 @@
 about: A launch page with a waitlist form saved to the backend (anyone can join; only admins can read it).
-theme: ocean
+theme: jade
 backend:
   rate_limits: true
   collections:

@@ -1,7 +1,7 @@
 # Every section on one page: the demo of what a spec can do without a backend.
 name: Showcase
 tagline: Every section of the Jade site compiler on one page.
-theme: {name: neon, mode: auto}
+theme: jade
 pages:
   - path: /
     title: Showcase

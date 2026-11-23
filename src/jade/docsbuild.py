@@ -67,21 +67,40 @@ def _groups(tps: list[dict]) -> list[tuple[str, list[dict]]]:
     ref = [t for t in tps if docs._pages()[t["topic"]]["meta"].get("generated")]
     return [("Guide", guide), ("Reference", ref)]
 
+# Jade's Vault look for the docs (the same tokens as the sites and Jade Agent UI/UX)
+VAULT = """
+body{position:relative}header.top,.layout,footer{position:relative;z-index:1}
+header.top{background:color-mix(in srgb,var(--jade-bg) 85%,transparent);backdrop-filter:blur(8px)}
+header.top .brand{font-family:var(--jade-display);text-transform:uppercase;letter-spacing:.22em;display:flex;align-items:center;gap:10px}
+header.top .brand::before{content:"";width:8px;height:8px;background:var(--jade-accent);box-shadow:0 0 10px var(--jade-accent)}
+header.top nav a{font-family:var(--jade-display);text-transform:uppercase;letter-spacing:.1em;text-decoration:none}
+header.top input,#results,.pager a,main pre,aside a{border-radius:0}
+main h1,main h2,main h3,aside h2{font-family:var(--jade-display);letter-spacing:.04em}main h1,main h2{text-transform:uppercase}
+main h1{font-size:2.4rem;line-height:1.05;text-shadow:-2px 0 rgb(255 61 79/.4),2px 0 rgb(31 229 165/.4)}
+aside h2{color:var(--jade-accent-2);font-family:var(--jade-mono);letter-spacing:.24em}aside a[aria-current]{box-shadow:inset 2px 0 var(--jade-accent);color:var(--jade-accent)}
+main pre,main code{font-family:var(--jade-mono)}main pre{border-left:2px solid var(--jade-accent)}
+main img{box-shadow:var(--jade-glow)}main th{font-family:var(--jade-display);letter-spacing:.06em;text-transform:uppercase;font-size:.85rem}
+.cards a.card{border-radius:0;box-shadow:var(--jade-glow);clip-path:polygon(0 0,calc(100% - var(--jade-cut)) 0,100% var(--jade-cut),100% 100%,0 100%)}
+.cards.demos{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}.cards a.demo img{display:block;width:calc(100% + 32px);max-width:none;margin:-16px -16px 12px;aspect-ratio:16/9;object-fit:cover;object-position:top;border-bottom:1px solid var(--jade-border)}
+.cards .card b{font-family:var(--jade-display);text-transform:uppercase;letter-spacing:.06em;font-size:1.05rem}
+.cards a.card:hover{border-color:var(--jade-accent)}
+"""
+
 
 def _page(title: str, body: str, *, current: str, root: str, tps: list[dict], extra_head: str = "") -> str:
     th = themes.get("jade")
     side = "".join(f"<h2>{E(g)}</h2><ul>" + "".join(f'<li><a href="{root}{t["topic"]}.html"{" aria-current=page" if t["topic"] == current else ""}>{E(t["title"])}</a></li>' for t in ts) + "</ul>"
                    for g, ts in _groups(tps))
-    side += f'<h2>More</h2><ul><li><a href="{root}examples/demo/">Live demo</a></li><li><a href="{root}examples/"{" aria-current=page" if current == "examples" else ""}>Examples</a></li><li><a href="{root}md/">Markdown (agents)</a></li><li><a href="{root}llms.txt">llms.txt</a></li></ul>'
+    side += f'<h2>More</h2><ul><li><a href="{root}examples/">Live demos</a></li><li><a href="{root}examples/chat/">Agent chat</a></li><li><a href="{root}examples/course/">A course</a></li><li><a href="{root}examples/rpg/">An RPG</a></li><li><a href="{root}examples/vault/">Jade&#39;s Vault</a></li><li><a href="{root}examples/jade/">Jade, the PNGtuber</a></li><li><a href="{root}examples/demo/">A whole AI business</a></li><li><a href="{root}examples/"{" aria-current=page" if current == "examples" else ""}>Examples</a></li><li><a href="{root}md/">Markdown (agents)</a></li><li><a href="{root}llms.txt">llms.txt</a></li></ul>'
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{E(title)} · Jade Agent Stack</title><meta name="description" content="Jade Agent Stack documentation: {E(title)}">
 <link rel="alternate" type="text/markdown" href="{root}md/{current}.md">
-<style>{themes.css(th)}{CSS}</style>{extra_head}</head>
+<style>{themes.css(th, mode=th.get("mode", "auto"))}{CSS}{VAULT}</style>{extra_head}</head>
 <body><a class="skip" href="#main">Skip to content</a>
 <header class="top"><a class="brand" href="{root}index.html">Jade Agent Stack</a>
 <input id="q" type="search" placeholder="Search (/)" aria-label="Search the docs" autocomplete="off"><div id="results" hidden></div>
-<nav aria-label="Project"><a href="{root}examples/demo/">Live demo</a><a href="{root}start.html">Start</a><a href="{root}agents.html">For agents</a><a href="{root}examples/">Examples</a><a href="{REPO}">GitHub</a></nav></header>
+<nav aria-label="Project"><a href="{root}examples/">Live demos</a><a href="{root}start.html">Start</a><a href="{root}agents.html">For agents</a><a href="{root}examples/">Examples</a><a href="{REPO}">GitHub</a></nav></header>
 <div class="layout"><aside aria-label="Topics">{side}</aside><main id="main">{body}</main></div>
 <footer>Jade Agent Stack {compat.TOOLKIT}. Generated from src/jade/docs. No analytics.</footer>
 <script>const ROOT={json.dumps(root)};{SEARCH_JS}</script>
@@ -128,9 +147,10 @@ jade site new "Acme AI" --template saas && jade site build && jade site preview
 
 People read these pages; agents read [the Markdown](md/) and [llms.txt](llms.txt), or ask `jade docs search`.
 
-**[Try the live demo](examples/demo/)**: a whole AI business (sign-up, plans and checkout, account with usage and API
-keys, a waitlist, a product list, a chat) built from [one YAML file](https://github.com/lucky-edgelord/jade-agent-stack/blob/main/examples/sites/demo/jade.site.yaml),
-with a pretend backend that runs in your browser.""")
+**[Live demos](examples/)**, all in Jade's Vault look and all in your browser: [an agent chat](examples/chat/) with tools,
+approvals and dashboards; [a course](examples/course/) where Jade teaches and Python runs on MicroPython; [an RPG](examples/rpg/)
+and [Jade's Vault](examples/vault/) on jade-vn-engine; [Jade, the PNGtuber](examples/jade/); and [a whole AI business](examples/demo/)
+built from [one YAML file](https://github.com/lucky-edgelord/jade-agent-stack/blob/main/examples/sites/demo/jade.site.yaml).""")
     out["docs/index.html"] = _page("Documentation", intro + f'<h2>Topics</h2><div class="cards">{cards}</div>', current="index", root="", tps=tps)
     out["docs/search.json"] = json.dumps(search, separators=(",", ":"))
     out["docs/md/index.md"] = "# Jade Agent Stack docs (Markdown)\n\n" + "\n".join(f"- [{t['title']}]({t['topic']}.md): {t['summary']}" for t in tps) + "\n\n" + FOOT_MD.format(src="") + "\n"
@@ -270,8 +290,19 @@ def examples_page(root: Path, tps: list[dict]) -> str:
                      f'(template {E(s.get("template", "none"))}, theme {E(s.get("theme", "jade") if isinstance(s.get("theme", "jade"), str) else s["theme"].get("name"))})</span></a>')
     pbs = sorted((Path(root) / "examples").glob("*.playbook.yaml"))
     pb_list = "".join(f'<li><a href="{REPO}/blob/main/examples/{p.name}"><code>{E(p.name)}</code></a></li>' for p in pbs)
-    body = markdown.render("# Examples\n\n**[The live demo](demo/)** has a pretend backend in the browser: sign up, subscribe, make keys, join the waitlist.\n\nEach site below is built by `jade site build` from a few lines of `jade.site.yaml` "
-                           "(in `examples/sites/<name>/`). Sites that need a backend show their pages, and their forms and sign-in work once deployed to a Jade Agent Base.")
+    live = [("chat/", "chat", "Agent chat", "Jade Agent UI/UX: streaming, thinking, tool calls, approvals, a page surface the agent draws, dashboards. A demo agent, no model needed; paste an Ollama Cloud key for a real Jade Agent Kit agent."),
+            ("course/", "course-python", "A course", "jade-edu: Jade teaches with narrated slides, a concept map, quizzes, cards, an exam, and labs that check themselves: Python on MicroPython, JavaScript, a terminal, a webxdc app."),
+            ("jade/", "jade", "Jade, the PNGtuber", "Jade Vault's default avatar: five expressions, blinking, lip-flap to speech, nods, leaning toward your pointer. No WebGL."),
+            ("rpg/", "rpg", "An RPG", "jade-vn-engine: a tile scroller with NPCs and a minimap, Phantasy Star-style battles, faux-3D house tours, keypad and other minigames, lighting."),
+            ("vault/", "vault-live2d", "Jade's Vault", "jade-vn-engine: walk Jade through Vault Loci's painted vault, cycle the lights (L), the map (M), VHS (V), and meet a Live2D guest at the Comms Desk."),
+            ("demo/", "site", "A whole AI business", "A site from one YAML file with a pretend backend in your browser: sign up, subscribe, make API keys, join the waitlist, chat.")]
+    cards = "".join(f'<a class="card demo" href="{h}"><img src="../img/demo-{i}.webp" alt="" loading="lazy"><b>{E(t)}</b><span>{E(d)}</span></a>' for h, i, t, d in live)
+    body = markdown.render("# Live demos\n\nEverything below runs in your browser from the CDN, at the commits this toolkit pins, in Jade's Vault look. "
+                           "`python3 build/demos.py` builds them with the toolkit's own commands (`jade vn build --cdn`, `jade edu validate`), and "
+                           "`python3 build/demoshots.py` plays each one in headless Chrome and fails on any error.")
+    body += f'<div class="cards demos">{cards}</div>'
+    body += markdown.render("## Sites\n\nEach site below is built by `jade site build` from a few lines of `jade.site.yaml` "
+                            "(in `examples/sites/<name>/`), in the default `jade` theme. Sites that need a backend show their pages, and their forms and sign-in work once deployed to a Jade Agent Base.")
     body += f'<div class="cards">{"".join(items)}</div><h2>Playbooks</h2><ul>{pb_list}</ul>'
     return _page("Examples", body, current="examples", root="../", tps=tps)
 

@@ -58,7 +58,7 @@ FONTS = {
 
 # name: (description, light (bg, fg, accent), dark (bg, fg, accent), font, radius)
 _T = {
-    "jade": ("Calm green on near-white; the Jade default", ("#f7faf8", "#15201b", "#0b7a5b"), ("#0e1411", "#e4ede8", "#3ddc97"), None, 12),
+    "classic": ("Calm green on near-white; the old jade palette", ("#f7faf8", "#15201b", "#0b7a5b"), ("#0e1411", "#e4ede8", "#3ddc97"), None, 12),
     "midnight": ("Indigo on deep navy", ("#f6f7fb", "#171a2b", "#4f46e5"), ("#0b0d17", "#e6e8f5", "#8b85ff"), "Inter", 12),
     "paper": ("Warm paper, rust accent, a serif for headings", ("#faf8f4", "#2a2620", "#a14a1f"), ("#1a1714", "#ece6dc", "#e39a6b"), "Fraunces", 8),
     "contrast": ("Maximum contrast for readability", ("#ffffff", "#000000", "#0040c0"), ("#000000", "#ffffff", "#ffd400"), None, 6),
@@ -73,17 +73,44 @@ _T = {
 }
 
 
+# ---- "jade": Jade's own look from Jade Vault, token for token the same as Jade Agent UI/UX's default preset
+_KEYS = ["bg", "surface", "surface-2", "fg", "muted", "border", "accent", "accent-fg", "user", "user-fg", "code",
+         "ok", "warn", "danger", "syn-k", "syn-s", "syn-n", "syn-c"]
+_JADE_LIGHT = dict(zip(_KEYS, ["#eef5f2", "#f8fcfa", "#e2ede8", "#06140f", "#4f665d", "#b9d3c8", "#0a8f63", "#ffffff", "#d7efe4", "#06140f", "#e6f0ec",
+                                "#0a8f63", "#a8650f", "#d22b3c", "#0b6e99", "#b0306a", "#6b49b0", "#5c7369"]))
+_JADE_DARK = dict(zip(_KEYS, ["#040807", "#09100e", "#0f1a17", "#e3f2ed", "#83998f", "#1a2d27", "#1fe5a5", "#00140c", "#0f2a20", "#e3f2ed", "#060c0a",
+                               "#b8ffdf", "#f2c14e", "#ff3d4f", "#7fd8ff", "#ffb8c6", "#c8a4f0", "#5f7a6e"]))
+_JADE_TYPE = {"display": "'Rajdhani','Arial Narrow',system-ui,sans-serif", "font": "'Chakra Petch',system-ui,-apple-system,'Segoe UI',sans-serif",
+              "mono": "'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace", "cut": "10px"}
+_JADE_LIGHT.update({**_JADE_TYPE, "glow": "0 0 0 1px rgb(10 143 99 / .25)", "accent-2": "#d22b6a"})
+_JADE_DARK.update({**_JADE_TYPE, "glow": "0 0 0 1px #1d6b52, 0 0 18px rgb(31 229 165 / .16)", "accent-2": "#ffb8c6",
+                   "shadow": "0 0 0 1px #1a2d27, 0 10px 30px rgb(0 0 0 / .45)"})
+_FONT_CDN = "https://cdn.jsdelivr.net/npm/@fontsource"
+JADE_FONTS = "".join(f"@font-face{{font-family:'{fam}';font-style:normal;font-weight:{w};font-display:swap;src:url({_FONT_CDN}/{pkg}@5/files/{pkg}-latin-{w}-normal.woff2) format('woff2')}}"
+                     for fam, pkg, ws in (("Rajdhani", "rajdhani", (500, 600, 700)), ("Chakra Petch", "chakra-petch", (400, 500, 600)), ("JetBrains Mono", "jetbrains-mono", (400, 600)))
+                     for w in ws)
+# Vault's grid and scanline backdrop (dark only), the same as setTheme({ backdrop: true }) in Jade Agent UI/UX
+JADE_BACKDROP = """body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:
+linear-gradient(transparent 0 calc(100% - 1px),rgb(31 229 165/.035) 0) 0 0/100% 32px,linear-gradient(90deg,transparent 0 calc(100% - 1px),rgb(31 229 165/.035) 0) 0 0/32px 100%,
+radial-gradient(1200px 600px at 85% -10%,rgb(31 229 165/.10),transparent 60%),radial-gradient(900px 500px at -10% 110%,rgb(255 184 198/.06),transparent 60%)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:2147483000;background:repeating-linear-gradient(0deg,rgb(0 0 0/.18) 0 1px,transparent 1px 3px);mix-blend-mode:multiply;opacity:.55}"""
+
+
 def get(name: str) -> dict:
-    """a theme: {name, description, light, dark, font, font_url, radius}"""
+    """a theme: {name, description, light, dark, font, font_url, radius} (+ mode, css for "jade")"""
+    if name == "jade":
+        return {"name": "jade", "description": "Jade's own look from Jade Vault: netrunner green on void black, cut corners, Rajdhani, Chakra Petch and JetBrains Mono, grid and scanlines",
+                "light": dict(_JADE_LIGHT), "dark": dict(_JADE_DARK), "font": None, "font_url": None, "radius": 2, "mode": "dark",
+                "fonts_css": JADE_FONTS, "backdrop": JADE_BACKDROP}
     if name not in _T:
-        raise KeyError(f"unknown theme {name!r}; themes: {', '.join(_T)}")
+        raise KeyError(f"unknown theme {name!r}; themes: {', '.join(names())}")
     d, l, k, font, radius = _T[name]
     return {"name": name, "description": d, "light": palette(*l), "dark": palette(*k), "font": font, "font_url": FONTS.get(font),
             "radius": radius}
 
 
 def names() -> list[str]:
-    return list(_T)
+    return ["jade", *_T]
 
 
 def css(theme: dict, *, mode: str = "auto", overrides: dict | None = None) -> str:
@@ -91,17 +118,22 @@ def css(theme: dict, *, mode: str = "auto", overrides: dict | None = None) -> st
     font = f'"{theme["font"]}", {SANS}' if theme.get("font") else SANS
     mono = f'"{theme["font"]}", ui-monospace, monospace' if theme.get("font") == "JetBrains Mono" else "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
     shared = {"radius": f'{theme["radius"]}px', "font": font, "mono": mono, "space": "8px", "font-size": "16px",
-              "shadow": "0 1px 2px rgb(0 0 0 / .06), 0 8px 24px rgb(0 0 0 / .06)", "focus": "var(--jade-accent)"}
+              "shadow": "0 1px 2px rgb(0 0 0 / .06), 0 8px 24px rgb(0 0 0 / .06)", "focus": "var(--jade-accent)",
+              "display": "var(--jade-font)", "cut": "0px", "glow": "none", "accent-2": "var(--jade-accent)"}
     over = overrides or {}
 
     def block(colors, scheme):
         vals = {**shared, **colors, **over}
         return ";".join(f"--jade-{k}:{v}" for k, v in vals.items()) + f";color-scheme:{scheme}"
 
+    pre = theme.get("fonts_css", "")
+    bd = theme.get("backdrop", "")
     if mode == "light":
-        return f":root{{{block(theme['light'], 'light')}}}"
+        return pre + f":root{{{block(theme['light'], 'light')}}}"
     if mode == "dark":
-        return f":root{{{block(theme['dark'], 'dark')}}}"
-    return (f":root{{{block(theme['light'], 'light')}}}"
+        return pre + f":root{{{block(theme['dark'], 'dark')}}}" + bd
+    if bd:   # the backdrop is drawn only in dark mode
+        bd = f"@media (prefers-color-scheme:dark){{:root:not([data-jade-mode=light]) {bd.replace('}' + chr(10) + 'body::after', '} :root:not([data-jade-mode=light]) body::after')}}}" + bd.replace("body::", ":root[data-jade-mode=dark] body::")
+    return pre + (f":root{{{block(theme['light'], 'light')}}}"
             f"@media (prefers-color-scheme:dark){{:root:not([data-jade-mode=light]){{{block(theme['dark'], 'dark')}}}}}"
-            f":root[data-jade-mode=dark]{{{block(theme['dark'], 'dark')}}}")
+            f":root[data-jade-mode=dark]{{{block(theme['dark'], 'dark')}}}") + bd

@@ -23,6 +23,14 @@ YAML into a website (and the backend behind it).
 The toolkit is a client, not a fork: it speaks to them only through those interfaces, and it needs the network to reach
 them. Vault asks, Base answers, Base logs, Base can say no.
 
+**Live demos:** <https://lucky-edgelord.github.io/jade-agent-stack/examples/>, all in Jade's Vault look: an [agent chat](https://lucky-edgelord.github.io/jade-agent-stack/examples/chat/), a [course](https://lucky-edgelord.github.io/jade-agent-stack/examples/course/), an [RPG](https://lucky-edgelord.github.io/jade-agent-stack/examples/rpg/), [Jade's Vault](https://lucky-edgelord.github.io/jade-agent-stack/examples/vault/), [Jade the PNGtuber](https://lucky-edgelord.github.io/jade-agent-stack/examples/jade/) and [a whole AI business](https://lucky-edgelord.github.io/jade-agent-stack/examples/demo/).
+
+| Agent chat | A course | Jade's Vault |
+|---|---|---|
+| ![](docs/img/demo-chat.webp) | ![](docs/img/demo-course-python.webp) | ![](docs/img/demo-vault-live2d.webp) |
+| **An RPG** | **Jade, the PNGtuber** | **A site from one YAML file** |
+| ![](docs/img/demo-rpg.webp) | ![](docs/img/demo-jade.webp) | ![](docs/img/demo-site.webp) |
+
 **Docs:** <https://lucky-edgelord.github.io/jade-agent-stack/> (people) · [`docs/md/`](docs/md/) and
 [`llms.txt`](llms.txt) (agents) · `jade docs search <words>` (anyone, offline).
 
@@ -43,7 +51,7 @@ jade site plan                            # every call a deploy makes; makes non
 jade site deploy                          # collections, sign-in, models, plans, billing, then the pages
 ```
 
-Eight templates (saas, chatbot, landing, waitlist, docs, portfolio, shop, dashboard), twelve themes, nineteen
+Eight templates (saas, chatbot, landing, waitlist, docs, portfolio, shop, dashboard), thirteen themes (Jade's Vault look by default), nineteen
 sections. A settled design is saved once (`jade site template save house`) and reused (`template: house`).
 See them built: [examples](https://lucky-edgelord.github.io/jade-agent-stack/examples/).
 
@@ -101,6 +109,7 @@ pip install -e .
 python -m unittest discover -s tests      # end-to-end tests also need Go and ../jade-agent-base (and ../jade-agent-ui-ux for the browser test)
 python build/build.py                     # docs, llms.txt, AGENTS.md, STACK.md, schema from src/jade/docs and the code
 python build/build.py --check             # CI fails when they are stale
+python build/demos.py && python build/demoshots.py   # rebuild the live demos, play them in Chrome, refresh thumbnails
 python build/docshots.py                  # the README and docs screenshots (JADE_VN_ENGINE, JADE_EDU, Playwright, Chrome)
 ```
 

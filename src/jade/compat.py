@@ -10,19 +10,20 @@ REQUIRES = {
     "base": ("0.6.0", "lucky-edgelord/jade-agent-base", "REST /api/agent/tools, MCP /api/agent/mcp, /api/agent/credentials"),
     "vault": ("2.18.3", "lucky-edgelord/jade-vault", "HTTP API /v1 (api 1), header-only auth"),
     "kit": ("3.1.0", "lucky-edgelord/Jade-agent-kit", "JS embed (ES module from a CDN)"),
-    "ui": ("1.2.0", "lucky-edgelord/Jade-agent-ui-ux", "web components (ES module from a CDN)"),
+    "ui": ("1.3.0", "lucky-edgelord/Jade-agent-ui-ux", "web components in Jade's Vault look (ES module from a CDN)"),
     "vn": ("0.1.0", "lucky-edgelord/jade-vn-engine", "ES modules from a CDN + vnc.py compiler (Ren'Py-style scripts on MicroPython)"),
     "edu": ("0.1.0", "lucky-edgelord/jade-edu", "ES module from a CDN (<jade-course>, course JSON)"),
 }
 # exact commits the toolkit fetches (CLI builds) and pages load, until these repositories publish tags
 REFS = {
-    "vn": "fe61a5095b6d37657b1ab243db5c1b28f4803829",
+    "ui": "929fe39282c56e65a1ab9c7f5bf609179613ae53",
+    "vn": "84ce781240c878fc0cba4519db33a43716cbbacd",
     "edu": "82e877ff5c825eff5af4707ace892e48a39bf740",
 }
 # what generated pages load
 CDN = {
     "kit": "https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-kit@v3.1.0/dist/jade-agent-kit.js",
-    "ui": "https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-ui-ux@v1.2.0/dist/jade-ui.js",
+    "ui": f"https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-ui-ux@{REFS['ui'][:7]}/dist/jade-ui.js",
     "vn": f"https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-vn-engine@{REFS['vn'][:7]}/engine/vn.js",
     "edu": f"https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-edu@{REFS['edu'][:7]}/src/edu.js",
 }

@@ -75,8 +75,13 @@ Templates are looked up in `./templates`, then your own, then the built-in ones;
 
 ## Themes
 
-`jade site themes` lists them: jade, midnight, paper, contrast, sunset, ocean, forest, rose, mono, neon, slate, terminal.
+`jade site themes` lists them: jade, classic, midnight, paper, contrast, sunset, ocean, forest, rose, mono, neon, slate, terminal.
 Each has a light and a dark palette, a font and a radius. Visitors switch with the theme toggle in the nav.
+
+**`jade`**, the default for every template, is Jade's own look from Jade Vault, token for token the same as Jade Agent UI/UX's
+default: netrunner green on void black (dark first), Rajdhani headings, Chakra Petch text, JetBrains Mono, cut corners, soft
+glows and Vault's grid and scanline backdrop. `classic` is the light green palette `jade` used to be. Any other
+theme is one line: `theme: paper`.
 
 ## Backend
 

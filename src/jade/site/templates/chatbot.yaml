@@ -1,5 +1,5 @@
 about: A chatbot site, with a full-page chat for signed-in users and a floating help widget on every page.
-theme: midnight
+theme: jade
 backend:
   modules: [gateway]
   providers:

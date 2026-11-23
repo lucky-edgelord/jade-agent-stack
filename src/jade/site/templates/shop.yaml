@@ -1,5 +1,5 @@
 about: "A small shop: products listed from the backend, accounts, and a support chat widget."
-theme: rose
+theme: jade
 backend:
   rate_limits: true
   collections:

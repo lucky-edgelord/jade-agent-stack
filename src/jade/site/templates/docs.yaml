@@ -1,5 +1,5 @@
 about: A documentation site from Markdown files (no backend needed).
-theme: paper
+theme: jade
 pages:
   - path: /
     title: Introduction

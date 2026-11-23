@@ -82,6 +82,27 @@ h1,h2,h3{line-height:1.2;letter-spacing:-.01em;margin:0 0 .4em}h1{font-size:clam
 jade-chat{display:block;border:1px solid var(--jade-border);border-radius:var(--jade-radius,10px);overflow:hidden}
 """
 
+# Jade's Vault look on top of SITE_CSS (theme "jade" only): display type, cut corners, glows, the boot-screen eyebrow
+VAULT_CSS = """
+body{position:relative}main,.nav,.foot{position:relative;z-index:1}
+h1,h2,h3,.brand,.btn,.nav nav a,.stat .v,.plan .price,summary{font-family:var(--jade-display);letter-spacing:.04em}
+h1,h2{text-transform:uppercase;font-weight:700}h1{line-height:1.02;text-shadow:-2px 0 rgb(255 61 79/.45),2px 0 rgb(31 229 165/.45)}
+.brand{text-transform:uppercase;letter-spacing:.22em}.brand::before{content:"";width:8px;height:8px;background:var(--jade-accent);box-shadow:0 0 10px var(--jade-accent)}
+.eyebrow{background:none;border-radius:0;padding:0;color:var(--jade-accent-2);font-family:var(--jade-mono);font-size:.78rem;letter-spacing:.32em;text-transform:uppercase}.eyebrow::before{content:"// "}
+.btn{border-radius:0;text-transform:uppercase;letter-spacing:.12em;font-size:.92rem;clip-path:polygon(0 0,100% 0,100% calc(100% - var(--jade-cut)),calc(100% - var(--jade-cut)) 100%,0 100%)}
+.btn.primary{box-shadow:var(--jade-glow)}.btn:hover{background:var(--jade-surface-2)}.btn.primary:hover{background:var(--jade-accent);filter:brightness(1.12)}
+.card,.cta .wrap,.hero-img,jade-chat{border-radius:0;clip-path:polygon(0 0,calc(100% - var(--jade-cut)) 0,100% var(--jade-cut),100% 100%,0 100%)}
+.card{box-shadow:var(--jade-glow);background:linear-gradient(180deg,color-mix(in srgb,var(--jade-accent) 4%,var(--jade-surface)),var(--jade-surface))}
+.feat .icon,.steps .num{border-radius:0;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,0 100%)}
+.stat .v{text-shadow:0 0 18px color-mix(in srgb,var(--jade-accent) 60%,transparent)}
+.cta .wrap{background:var(--jade-surface);color:var(--jade-fg);border:1px solid var(--jade-accent);box-shadow:var(--jade-glow)}
+.cta .lead{color:var(--jade-muted)}.cta .btn.primary{background:var(--jade-accent);color:var(--jade-accent-fg)}
+.nav{background:color-mix(in srgb,var(--jade-bg) 82%,transparent)}.nav nav a{text-transform:uppercase;font-size:.9rem;border-radius:0}
+.nav nav a[aria-current]{background:none;color:var(--jade-accent);box-shadow:inset 0 -2px var(--jade-accent)}
+.form input,.form textarea,.keyform input{border-radius:0;font-family:var(--jade-mono)}
+.md pre,.md code{font-family:var(--jade-mono)}.md pre{border-radius:0;border-left:2px solid var(--jade-accent)}
+"""
+
 
 def out_path(path: str) -> str:
     p = path.strip("/")
@@ -111,7 +132,7 @@ def compile_site(s: dict, *, base_dir: Path | None = None, write: Path | None = 
                                  **{r: c[r] for r in ("list", "view", "create", "update", "delete") if c.get(r) is not None}} for c in b.get("collections") or []]}
         demo = "<script>window.JADE_DEMO=" + json.dumps(seed).replace("</", "<\\/") + ";</script>\n<script>" + DEMO_JS.read_text() + "</script>"
     site = {**s, "_kit": kit, "_plans": b.get("plans") or [], "_chat_models": [m["name"] for m in b.get("models") or [] if m.get("kind", "chat") == "chat"]}
-    css = themes.css(theme, mode=td.get("mode", "auto"), overrides={("--jade-" + k.replace("_", "-") if not k.startswith("--") else k): v for k, v in overrides.items()} or None) + SITE_CSS
+    css = themes.css(theme, mode=td.get("mode", theme.get("mode", "auto")), overrides={("--jade-" + k.replace("_", "-") if not k.startswith("--") else k): v for k, v in overrides.items()} or None) + SITE_CSS + (VAULT_CSS if theme["name"] == "jade" else "")
     files: dict[str, str] = {}
     warnings: list[str] = []
     pages = s["pages"]
@@ -164,7 +185,7 @@ def document(s: dict, page: dict, body: str, ctx: sections.Context, css: str, ui
     desc = page.get("description") or s.get("description") or s.get("tagline") or ""
     url = (s.get("url") or "").rstrip("/")
     font = f'<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="{E(theme["font_url"])}">' if theme.get("font_url") else ""
-    fav = s.get("favicon") or "data:image/svg+xml," + _favicon(s["name"], themes.get(theme["name"])["light"].get("--jade-accent", "#0b7a5b"))
+    fav = s.get("favicon") or "data:image/svg+xml," + _favicon(s["name"], theme["dark" if theme["name"] == "jade" else "light"].get("accent", "#0b7a5b"))
     meta = [f'<meta name="description" content="{E(desc)}">', f'<meta property="og:title" content="{E(full)}">', f'<meta property="og:description" content="{E(desc)}">',
             '<meta property="og:type" content="website">']
     if url:

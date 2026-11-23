@@ -5,14 +5,14 @@
   "base": "0.6.0",
   "vault": "2.18.3",
   "kit": "3.1.0",
-  "ui": "1.2.0",
+  "ui": "1.3.0",
   "vn": "0.1.0",
   "edu": "0.1.0"
  },
  "cdn": {
   "kit": "https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-kit@v3.1.0/dist/jade-agent-kit.js",
-  "ui": "https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-ui-ux@v1.2.0/dist/jade-ui.js",
-  "vn": "https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-vn-engine@fe61a50/engine/vn.js",
+  "ui": "https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-ui-ux@929fe39/dist/jade-ui.js",
+  "vn": "https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-vn-engine@84ce781/engine/vn.js",
   "edu": "https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-edu@82e877f/src/edu.js"
  },
  "docs": [
@@ -1723,6 +1723,7 @@
  },
  "themes": [
   "jade",
+  "classic",
   "midnight",
   "paper",
   "contrast",

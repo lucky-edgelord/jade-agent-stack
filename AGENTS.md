@@ -1,7 +1,7 @@
 <!-- jade-agent-stack 0.1.0 -->
 # AGENTS.md: Jade Agent Stack
 
-Version pin: jade-agent-stack 0.1.0 (Base ≥ 0.6.0, Vault ≥ 2.18.3, Kit ≥ 3.1.0, UI/UX ≥ 1.2.0, vn ≥ 0.1.0, edu ≥ 0.1.0).
+Version pin: jade-agent-stack 0.1.0 (Base ≥ 0.6.0, Vault ≥ 2.18.3, Kit ≥ 3.1.0, UI/UX ≥ 1.3.0, vn ≥ 0.1.0, edu ≥ 0.1.0).
 
 This repository is the client toolkit over the Jade repositories. Vault is the control plane, Agent Base the resource
 plane, Agent Kit the embeddable subset of Vault, Agent UI/UX the presentation layer; jade-vn-engine (games) and jade-edu
