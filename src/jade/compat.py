@@ -17,7 +17,7 @@ REQUIRES = {
 # exact commits the toolkit fetches (CLI builds) and pages load, until these repositories publish tags
 REFS = {
     "ui": "929fe39282c56e65a1ab9c7f5bf609179613ae53",
-    "vn": "1268c01e51aab7d65bc1648428105a279f84682b",
+    "vn": "b6c5f2d09670da20a2105a349882f4d6ae5fc5e4",
     "edu": "82e877ff5c825eff5af4707ace892e48a39bf740",
 }
 # what generated pages load
