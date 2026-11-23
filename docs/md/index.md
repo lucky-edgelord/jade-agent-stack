@@ -3,6 +3,8 @@
 - [Quick start](start.md): Install, connect, check, then build a site or run a playbook.
 - [For agents](agents.md): The shortest paths to a working site or backend, in the fewest tokens.
 - [Sites](sites.md): The site spec, templates, themes, building, previewing and deploying to Jade Agent Base.
+- [Games](games.md): Visual novels and small games with jade-vn-engine: new, check and build from the CLI, MCP or HTTP.
+- [Courses](courses.md): Interactive courses with jade-edu: a course JSON, a talking teacher, labs; new, validate and page from the CLI, MCP or HTTP.
 - [Playbooks](playbooks.md): Portable YAML automation over Vault, Base, Kit and local commands; check, plan, run, approve.
 - [Harness, approvals and credentials](harness.md): How every call is checked before it leaves: approvals, idempotency keys, task credentials, compatibility.
 - [Python API](python.md): The SDK: Stack, Harness, Site, playbooks, docs, and asyncio wrappers.

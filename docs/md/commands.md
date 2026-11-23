@@ -197,6 +197,93 @@ Write a page with a chat: full-screen, inline or a floating widget.
 | `base` | str |  | a Jade Agent Base URL |
 | `title` | str | `Chat` |  |
 
+## vn.new
+
+Start a game for jade-vn-engine: game.toml and a script.rpy in Ren'Py-style script.
+
+`jade vn new`
+
+| Parameter | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `name` (positional) required | str |  |  |
+| `dir` | str |  | the folder (default: NAME) |
+| `libs` | list |  | engine libraries: rpg, minigames |
+| `title` | str |  | the game's display name |
+
+```sh
+jade vn new mygame --libs rpg,minigames
+```
+
+## vn.check
+
+Compile a game's scripts with the pinned engine and report labels and errors. Writes nothing.
+
+`jade vn check`
+
+| Parameter | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `dir` (positional) | str | `.` |  |
+| `engine` | str |  | a local jade-vn-engine checkout (default: the pinned commit, downloaded once) |
+
+## vn.build
+
+Build a game: a playable folder and a .xdc (webxdc). --cdn loads the engine from the pinned CDN instead of bundling it.
+
+`jade vn build`
+
+| Parameter | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `dir` (positional) | str | `.` |  |
+| `out` | str |  | the output folder (default: DIR/build) |
+| `cdn` | bool |  | load the engine from the CDN |
+| `engine` | str |  | a local jade-vn-engine checkout |
+
+```sh
+jade vn build mygame --cdn
+```
+
+## edu.new
+
+Write a starter course for jade-edu (every lesson block and lab kind, ready to edit).
+
+`jade edu new`
+
+| Parameter | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `out` (positional) required | str |  |  |
+| `title` | str |  | the course title |
+| `edu` | str |  | a local jade-edu checkout |
+
+```sh
+jade edu new course.json --title 'Intro to X'
+```
+
+## edu.validate
+
+Check a course JSON with jade-edu's own validator (needs Node). Errors fail; warnings are listed.
+
+`jade edu validate`
+
+| Parameter | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `file` (positional) required | str |  |  |
+| `edu` | str |  | a local jade-edu checkout |
+
+## edu.page
+
+Write a page that plays a course with <jade-course> from the pinned CDN.
+
+`jade edu page`
+
+| Parameter | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `course` (positional) required | str |  |  |
+| `out` (positional) required | str |  |  |
+| `teacher` | str (jade, none) | `jade` | jade, or none (captions only) |
+| `model` | str |  | a Live2D .model3.json URL (the teacher becomes Live2D) |
+| `core` | str |  | the Live2D Cubism Core URL (Live2D's licence) |
+| `title` | str |  |  |
+
 ## playbook.list
 
 Playbooks here (./, ./playbooks, ./examples) and whether each is approved.

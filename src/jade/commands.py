@@ -320,6 +320,52 @@ def _ui_chat(ctx, out, mount, preset, mode, base, title):
     return {"out": out, "mount": mount, "theme": preset}
 
 
+# ---- vn (jade-vn-engine) / edu (jade-edu) ----
+@command("vn.new", "Start a game for jade-vn-engine: game.toml and a script.rpy in Ren'Py-style script.", P("name", required=True, positional=True),
+         P("dir", help="the folder (default: NAME)"), P("libs", "list", help="engine libraries: rpg, minigames"), P("title", help="the game's display name"), mutates=True,
+         example="jade vn new mygame --libs rpg,minigames")
+def _vn_new(ctx, name, dir, libs, title):
+    from .resources import vn
+    return vn.new(name, dir=dir, libs=libs, title=title)
+
+
+@command("vn.check", "Compile a game's scripts with the pinned engine and report labels and errors. Writes nothing.", P("dir", default=".", positional=True),
+         P("engine", help="a local jade-vn-engine checkout (default: the pinned commit, downloaded once)"))
+def _vn_check(ctx, dir, engine):
+    from .resources import vn
+    return vn.check(dir, engine=engine)
+
+
+@command("vn.build", "Build a game: a playable folder and a .xdc (webxdc). --cdn loads the engine from the pinned CDN instead of bundling it.",
+         P("dir", default=".", positional=True), P("out", help="the output folder (default: DIR/build)"), P("cdn", "bool", help="load the engine from the CDN"),
+         P("engine", help="a local jade-vn-engine checkout"), mutates=True, example="jade vn build mygame --cdn")
+def _vn_build(ctx, dir, out, cdn, engine):
+    from .resources import vn
+    return vn.build(dir, out=out, cdn=bool(cdn), engine=engine)
+
+
+@command("edu.new", "Write a starter course for jade-edu (every lesson block and lab kind, ready to edit).", P("out", required=True, positional=True),
+         P("title", help="the course title"), P("edu", help="a local jade-edu checkout"), mutates=True, example="jade edu new course.json --title 'Intro to X'")
+def _edu_new(ctx, out, title, edu):
+    from .resources import edu as E
+    return E.new(out, title=title, edu=edu)
+
+
+@command("edu.validate", "Check a course JSON with jade-edu's own validator (needs Node). Errors fail; warnings are listed.", P("file", required=True, positional=True),
+         P("edu", help="a local jade-edu checkout"))
+def _edu_validate(ctx, file, edu):
+    from .resources import edu as E
+    return E.validate(file, edu=edu)
+
+
+@command("edu.page", "Write a page that plays a course with <jade-course> from the pinned CDN.", P("course", required=True, positional=True), P("out", required=True, positional=True),
+         P("teacher", default="jade", choices=("jade", "none"), help="jade, or none (captions only)"), P("model", help="a Live2D .model3.json URL (the teacher becomes Live2D)"),
+         P("core", help="the Live2D Cubism Core URL (Live2D's licence)"), P("title"), mutates=True)
+def _edu_page(ctx, course, out, teacher, model, core, title):
+    from .resources import edu as E
+    return E.page(course, out, teacher=teacher, model=model, core=core, title=title)
+
+
 # ---- playbooks ----
 def _vars(v):
     out = {}

@@ -12,11 +12,14 @@ A target with another major version is refused (JADE203); an older minor is a wa
 | vault | `lucky-edgelord/jade-vault` | 2.18.3 | HTTP API /v1 (api 1), header-only auth |
 | kit | `lucky-edgelord/Jade-agent-kit` | 3.1.0 | JS embed (ES module from a CDN) |
 | ui | `lucky-edgelord/Jade-agent-ui-ux` | 1.2.0 | web components (ES module from a CDN) |
+| vn | `lucky-edgelord/jade-vn-engine` | 0.1.0 | ES modules from a CDN + vnc.py compiler (Ren'Py-style scripts on MicroPython) |
+| edu | `lucky-edgelord/jade-edu` | 0.1.0 | ES module from a CDN (<jade-course>, course JSON) |
 | stack | `lucky-edgelord/jade-agent-stack` | 0.1.0 | this package |
 
 **Ownership:** Vault is the control plane (agent loop, schedules, approvals, the person). Agent Base is the resource plane
 (identity, database, model gateway, billing, audit log). Agent Kit is the embeddable subset of Vault. Agent UI/UX is the
-presentation layer. The canonical Kit is `lucky-edgelord/Jade-agent-kit`; copies elsewhere are vendored from a tag.
+presentation layer. jade-vn-engine (games) and jade-edu (courses) are front-ends on UI/UX's tokens; the toolkit builds with
+them at the commits in the table below. The canonical Kit is `lucky-edgelord/Jade-agent-kit`; copies elsewhere are vendored from a tag.
 
 ## What generated pages load (one pin each)
 
@@ -24,6 +27,17 @@ presentation layer. The canonical Kit is `lucky-edgelord/Jade-agent-kit`; copies
 | --- | --- |
 | kit | `https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-kit@v3.1.0/dist/jade-agent-kit.js` |
 | ui | `https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-ui-ux@v1.2.0/dist/jade-ui.js` |
+| vn | `https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-vn-engine@fe61a50/engine/vn.js` |
+| edu | `https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-edu@82e877f/src/edu.js` |
+
+## What the CLI builds with (one commit each)
+
+`jade vn` and `jade edu` fetch these commits once into `~/.cache/jade` (or use JADE_VN_ENGINE / JADE_EDU).
+
+| Part | Commit |
+| --- | --- |
+| vn | `lucky-edgelord/jade-vn-engine@fe61a5095b6d37657b1ab243db5c1b28f4803829` |
+| edu | `lucky-edgelord/jade-edu@82e877ff5c825eff5af4707ace892e48a39bf740` |
 
 ## Python dependencies (one pin each)
 
