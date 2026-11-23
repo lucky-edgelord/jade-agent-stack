@@ -34,6 +34,9 @@ Stable codes. `str(error)` gives the message and the remediation. Exit codes: 0 
 | `JADE403` | unknown tool | 1 | The target has no such tool. List them: `jade base tools`. |
 | `JADE404` | ambiguous tool | 1 | More than one target has this tool. Name the target. |
 | `JADE405` | not found | 1 | Check the name; list what exists with the matching `list` command. |
+| `JADE407` | invalid game script | 1 | Fix the script at the file and line the message names (`jade vn check <dir>`). |
+| `JADE408` | invalid course | 1 | Fix the course JSON where the message says (`jade edu validate <file>`). |
+| `JADE409` | missing tool | 1 | Install it, or point the toolkit at a local checkout (JADE_VN_ENGINE, JADE_EDU). |
 | `JADE406` | generated files are stale | 1 | Run `python build/build.py` and commit the result. |
 | `JADE500` | doctor failed | 1 | Run `jade doctor` and fix what it reports, or pass --force to go on anyway. |
 

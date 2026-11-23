@@ -1,0 +1,60 @@
+---
+title: "Courses"
+summary: "Interactive courses with jade-edu: a course JSON, a talking teacher, labs; new, validate and page from the CLI, MCP or HTTP."
+tags: [edu, courses, teacher, labs, webxdc]
+applies_to: stack
+audience: both
+since: 0.1.0
+order: 13
+---
+# Courses
+
+[jade-edu](https://github.com/lucky-edgelord/jade-edu) plays a course from one JSON file. The format is `jade-course`; `lilith-course` files load too. Each chapter of a course has:
+
+- lecture slides that a teacher reads aloud (Jade by default)
+- an animated concept map
+- a quiz
+- a reading view
+- practice labs: fill in the blanks, order, match, write, JavaScript, Python on MicroPython, a scripted terminal, or any webxdc app
+- flashcards
+
+A course can also have a final exam.
+
+A page needs one module from the CDN:
+
+```html
+<script type="module" src="https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-edu@<pin>/src/edu.js"></script>
+<jade-course src="course.json"></jade-course>
+```
+
+Everything after that loads the first time it is needed: the player, the labs, the teacher's frames, MicroPython and KaTeX. MicroPython and the Live2D renderer come from jade-vn-engine's pinned CDN path. The player reads the `--jade-*` tokens of Agent UI/UX, so it matches the rest of the stack.
+
+## Commands
+
+| Command | Does |
+| --- | --- |
+| `jade edu new FILE [--title T]` | writes a starter course that uses every block and lab kind |
+| `jade edu validate FILE` | checks the course with jade-edu's own validator and returns its chapters, labs, quiz count and warnings. A broken course is JADE408 |
+| `jade edu page COURSE OUT [--teacher none] [--model URL --core URL]` | writes a page that plays the course |
+
+`validate` and `new` run jade-edu's JavaScript through Node, at the pinned commit. Set `JADE_EDU`, or pass `--edu`, to use a local checkout instead.
+
+Over MCP the tools are `edu_new`, `edu_validate` and `edu_page`.
+
+## For agents writing courses
+
+- Validate every course you write, then fix every warning. The format expects each chapter to have a table and references.
+- Give each chapter 2–6 key points, a concept map of 4–8 links, 2–4 quiz questions and 1–3 labs that check themselves.
+- Spell acronyms out for the voice in `pronounce`.
+- The player emits events: `open`, `chapter`, `quiz`, `lab` (with `pass` and `msgs`), `lecture-done` and `exam`. Listen for them to notice when a learner is stuck.
+
+## Teachers
+
+| Teacher | Set with |
+| --- | --- |
+| Jade | `teacher="jade"`, the default |
+| Captions only | `teacher="none"` |
+| Live2D | `model="…/x.model3.json"` and `core="…/live2dcubismcore.min.js"` |
+| Your own art | `registerTeacher(name, factory)` in JavaScript |
+
+Live2D models are drawn by jade-vn-engine's renderer. The Cubism Core is Live2D's proprietary runtime: you supply it, and using it means accepting their licence.

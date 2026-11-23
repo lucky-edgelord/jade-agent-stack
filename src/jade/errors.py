@@ -27,6 +27,9 @@ CODES: dict[str, tuple[str, str]] = {
     "JADE403": ("unknown tool", "The target has no such tool. List them: `jade base tools`."),
     "JADE404": ("ambiguous tool", "More than one target has this tool. Name the target."),
     "JADE405": ("not found", "Check the name; list what exists with the matching `list` command."),
+    "JADE407": ("invalid game script", "Fix the script at the file and line the message names (`jade vn check <dir>`)."),
+    "JADE408": ("invalid course", "Fix the course JSON where the message says (`jade edu validate <file>`)."),
+    "JADE409": ("missing tool", "Install it, or point the toolkit at a local checkout (JADE_VN_ENGINE, JADE_EDU)."),
     "JADE406": ("generated files are stale", "Run `python build/build.py` and commit the result."),
     "JADE500": ("doctor failed", "Run `jade doctor` and fix what it reports, or pass --force to go on anyway."),
 }

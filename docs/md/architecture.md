@@ -17,7 +17,12 @@ version: 0.1.0
 | Jade Agent Base | identity, the database, the model gateway, billing, the authoritative audit log | host an agent, schedule anything |
 | Jade Agent Kit | the embeddable subset of Vault: the agent in any web page | own data or identity |
 | Jade Agent UI/UX | web components and themes | talk to anything but Kit and Base |
-| Jade Agent Stack | a client over all four: SDK, CLI, wizard, harness, playbooks, sites, docs | copy their logic |
+| jade-vn-engine | games: Ren'Py-style scripts on MicroPython, effects, maps, battles, tours, Live2D (lazy ES modules) | own data, talk to Base |
+| jade-edu | courses: course JSON, the player with a talking teacher, labs (lazy ES modules) | own data, talk to Base |
+| Jade Agent Stack | a client over all of them: SDK, CLI, wizard, harness, playbooks, sites, games, courses, docs | copy their logic |
+
+Every front-end (Kit, UI/UX, the engine, edu) is an ES module loaded from a pinned CDN path that finds its own files
+with `import.meta.url` and imports the rest on first use; all of them read UI/UX's `--jade-*` tokens.
 
 The seam between Vault (or Kit) and Base is MCP (`/api/agent/mcp`), with the same tools over REST. Fleet (many
 terminals sharing one vault) is users, not distributed compute.

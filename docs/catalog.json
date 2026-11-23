@@ -5,11 +5,15 @@
   "base": "0.6.0",
   "vault": "2.18.3",
   "kit": "3.1.0",
-  "ui": "1.2.0"
+  "ui": "1.2.0",
+  "vn": "0.1.0",
+  "edu": "0.1.0"
  },
  "cdn": {
   "kit": "https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-kit@v3.1.0/dist/jade-agent-kit.js",
-  "ui": "https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-ui-ux@v1.2.0/dist/jade-ui.js"
+  "ui": "https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-ui-ux@v1.2.0/dist/jade-ui.js",
+  "vn": "https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-vn-engine@fe61a50/engine/vn.js",
+  "edu": "https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-edu@82e877f/src/edu.js"
  },
  "docs": [
   {
@@ -32,6 +36,20 @@
    "summary": "The site spec, templates, themes, building, previewing and deploying to Jade Agent Base.",
    "md": "md/sites.md",
    "html": "sites.html"
+  },
+  {
+   "topic": "games",
+   "title": "Games",
+   "summary": "Visual novels and small games with jade-vn-engine: new, check and build from the CLI, MCP or HTTP.",
+   "md": "md/games.md",
+   "html": "games.html"
+  },
+  {
+   "topic": "courses",
+   "title": "Courses",
+   "summary": "Interactive courses with jade-edu: a course JSON, a talking teacher, labs; new, validate and page from the CLI, MCP or HTTP.",
+   "md": "md/courses.md",
+   "html": "courses.html"
   },
   {
    "topic": "playbooks",
@@ -453,6 +471,168 @@
      "type": "str",
      "help": "",
      "default": "Chat"
+    }
+   ]
+  },
+  {
+   "name": "vn.new",
+   "help": "Start a game for jade-vn-engine: game.toml and a script.rpy in Ren'Py-style script.",
+   "mutates": true,
+   "params": [
+    {
+     "name": "name",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "dir",
+     "type": "str",
+     "help": "the folder (default: NAME)"
+    },
+    {
+     "name": "libs",
+     "type": "list",
+     "help": "engine libraries: rpg, minigames"
+    },
+    {
+     "name": "title",
+     "type": "str",
+     "help": "the game's display name"
+    }
+   ],
+   "example": "jade vn new mygame --libs rpg,minigames"
+  },
+  {
+   "name": "vn.check",
+   "help": "Compile a game's scripts with the pinned engine and report labels and errors. Writes nothing.",
+   "mutates": false,
+   "params": [
+    {
+     "name": "dir",
+     "type": "str",
+     "help": "",
+     "default": "."
+    },
+    {
+     "name": "engine",
+     "type": "str",
+     "help": "a local jade-vn-engine checkout (default: the pinned commit, downloaded once)"
+    }
+   ]
+  },
+  {
+   "name": "vn.build",
+   "help": "Build a game: a playable folder and a .xdc (webxdc). --cdn loads the engine from the pinned CDN instead of bundling it.",
+   "mutates": true,
+   "params": [
+    {
+     "name": "dir",
+     "type": "str",
+     "help": "",
+     "default": "."
+    },
+    {
+     "name": "out",
+     "type": "str",
+     "help": "the output folder (default: DIR/build)"
+    },
+    {
+     "name": "cdn",
+     "type": "bool",
+     "help": "load the engine from the CDN"
+    },
+    {
+     "name": "engine",
+     "type": "str",
+     "help": "a local jade-vn-engine checkout"
+    }
+   ],
+   "example": "jade vn build mygame --cdn"
+  },
+  {
+   "name": "edu.new",
+   "help": "Write a starter course for jade-edu (every lesson block and lab kind, ready to edit).",
+   "mutates": true,
+   "params": [
+    {
+     "name": "out",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "title",
+     "type": "str",
+     "help": "the course title"
+    },
+    {
+     "name": "edu",
+     "type": "str",
+     "help": "a local jade-edu checkout"
+    }
+   ],
+   "example": "jade edu new course.json --title 'Intro to X'"
+  },
+  {
+   "name": "edu.validate",
+   "help": "Check a course JSON with jade-edu's own validator (needs Node). Errors fail; warnings are listed.",
+   "mutates": false,
+   "params": [
+    {
+     "name": "file",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "edu",
+     "type": "str",
+     "help": "a local jade-edu checkout"
+    }
+   ]
+  },
+  {
+   "name": "edu.page",
+   "help": "Write a page that plays a course with <jade-course> from the pinned CDN.",
+   "mutates": true,
+   "params": [
+    {
+     "name": "course",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "out",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "teacher",
+     "type": "str",
+     "help": "jade, or none (captions only)",
+     "default": "jade",
+     "choices": [
+      "jade",
+      "none"
+     ]
+    },
+    {
+     "name": "model",
+     "type": "str",
+     "help": "a Live2D .model3.json URL (the teacher becomes Live2D)"
+    },
+    {
+     "name": "core",
+     "type": "str",
+     "help": "the Live2D Cubism Core URL (Live2D's licence)"
+    },
+    {
+     "name": "title",
+     "type": "str",
+     "help": ""
     }
    ]
   },
@@ -975,6 +1155,21 @@
    "code": "JADE405",
    "meaning": "not found",
    "remediation": "Check the name; list what exists with the matching `list` command."
+  },
+  {
+   "code": "JADE407",
+   "meaning": "invalid game script",
+   "remediation": "Fix the script at the file and line the message names (`jade vn check <dir>`)."
+  },
+  {
+   "code": "JADE408",
+   "meaning": "invalid course",
+   "remediation": "Fix the course JSON where the message says (`jade edu validate <file>`)."
+  },
+  {
+   "code": "JADE409",
+   "meaning": "missing tool",
+   "remediation": "Install it, or point the toolkit at a local checkout (JADE_VN_ENGINE, JADE_EDU)."
   },
   {
    "code": "JADE406",

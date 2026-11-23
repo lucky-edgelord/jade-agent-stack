@@ -172,10 +172,11 @@ def agents_md(tps: list[dict]) -> str:
     return f"""<!-- jade-agent-stack {compat.TOOLKIT} -->
 # AGENTS.md: Jade Agent Stack
 
-Version pin: jade-agent-stack {compat.TOOLKIT} (Base ≥ {compat.REQUIRES['base'][0]}, Vault ≥ {compat.REQUIRES['vault'][0]}, Kit ≥ {compat.REQUIRES['kit'][0]}, UI/UX ≥ {compat.REQUIRES['ui'][0]}).
+Version pin: jade-agent-stack {compat.TOOLKIT} (Base ≥ {compat.REQUIRES['base'][0]}, Vault ≥ {compat.REQUIRES['vault'][0]}, Kit ≥ {compat.REQUIRES['kit'][0]}, UI/UX ≥ {compat.REQUIRES['ui'][0]}, vn ≥ {compat.REQUIRES['vn'][0]}, edu ≥ {compat.REQUIRES['edu'][0]}).
 
 This repository is the client toolkit over the Jade repositories. Vault is the control plane, Agent Base the resource
-plane, Agent Kit the embeddable subset of Vault, Agent UI/UX the presentation layer. The toolkit speaks to them only
+plane, Agent Kit the embeddable subset of Vault, Agent UI/UX the presentation layer; jade-vn-engine (games) and jade-edu
+(courses) are front-ends that share UI/UX's look and load from the same CDN. The toolkit speaks to them only
 through their documented interfaces and copies none of their logic.
 
 ## Use it
@@ -188,6 +189,8 @@ through their documented interfaces and copies none of their logic.
 | Section parameters | `jade site sections <name>` |
 | Deploy (see every call first) | `jade site plan`, then `jade site deploy` |
 | Playbooks | `jade playbook check|plan|run NAME` |
+| A game (jade-vn-engine) | `jade vn new NAME`, `jade vn check NAME`, `jade vn build NAME [--cdn]` |
+| A course (jade-edu) | `jade edu new course.json`, `jade edu validate course.json`, `jade edu page course.json index.html` |
 | Over MCP | `jade mcp` (tools: site_build, playbook_run, docs_search, …) |
 
 ## Work on it
@@ -225,13 +228,22 @@ A target with another major version is refused (JADE203); an older minor is a wa
 
 **Ownership:** Vault is the control plane (agent loop, schedules, approvals, the person). Agent Base is the resource plane
 (identity, database, model gateway, billing, audit log). Agent Kit is the embeddable subset of Vault. Agent UI/UX is the
-presentation layer. The canonical Kit is `lucky-edgelord/Jade-agent-kit`; copies elsewhere are vendored from a tag.
+presentation layer. jade-vn-engine (games) and jade-edu (courses) are front-ends on UI/UX's tokens; the toolkit builds with
+them at the commits in the table below. The canonical Kit is `lucky-edgelord/Jade-agent-kit`; copies elsewhere are vendored from a tag.
 
 ## What generated pages load (one pin each)
 
 | Module | URL |
 | --- | --- |
 """ + "\n".join(f"| {k} | `{u}` |" for k, u in compat.CDN.items()) + """
+
+## What the CLI builds with (one commit each)
+
+`jade vn` and `jade edu` fetch these commits once into `~/.cache/jade` (or use JADE_VN_ENGINE / JADE_EDU).
+
+| Part | Commit |
+| --- | --- |
+""" + "\n".join(f"| {k} | `{compat.REQUIRES[k][1]}@{r}` |" for k, r in compat.REFS.items()) + """
 
 ## Python dependencies (one pin each)
 

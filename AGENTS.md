@@ -1,10 +1,11 @@
 <!-- jade-agent-stack 0.1.0 -->
 # AGENTS.md: Jade Agent Stack
 
-Version pin: jade-agent-stack 0.1.0 (Base ≥ 0.6.0, Vault ≥ 2.18.3, Kit ≥ 3.1.0, UI/UX ≥ 1.2.0).
+Version pin: jade-agent-stack 0.1.0 (Base ≥ 0.6.0, Vault ≥ 2.18.3, Kit ≥ 3.1.0, UI/UX ≥ 1.2.0, vn ≥ 0.1.0, edu ≥ 0.1.0).
 
 This repository is the client toolkit over the Jade repositories. Vault is the control plane, Agent Base the resource
-plane, Agent Kit the embeddable subset of Vault, Agent UI/UX the presentation layer. The toolkit speaks to them only
+plane, Agent Kit the embeddable subset of Vault, Agent UI/UX the presentation layer; jade-vn-engine (games) and jade-edu
+(courses) are front-ends that share UI/UX's look and load from the same CDN. The toolkit speaks to them only
 through their documented interfaces and copies none of their logic.
 
 ## Use it
@@ -17,6 +18,8 @@ through their documented interfaces and copies none of their logic.
 | Section parameters | `jade site sections <name>` |
 | Deploy (see every call first) | `jade site plan`, then `jade site deploy` |
 | Playbooks | `jade playbook check|plan|run NAME` |
+| A game (jade-vn-engine) | `jade vn new NAME`, `jade vn check NAME`, `jade vn build NAME [--cdn]` |
+| A course (jade-edu) | `jade edu new course.json`, `jade edu validate course.json`, `jade edu page course.json index.html` |
 | Over MCP | `jade mcp` (tools: site_build, playbook_run, docs_search, …) |
 
 ## Work on it
@@ -37,6 +40,8 @@ Rules: never weaken a test; never put a secret in a file, URL or log; a refusal 
 - `start`: Install, connect, check, then build a site or run a playbook.
 - `agents`: The shortest paths to a working site or backend, in the fewest tokens.
 - `sites`: The site spec, templates, themes, building, previewing and deploying to Jade Agent Base.
+- `games`: Visual novels and small games with jade-vn-engine: new, check and build from the CLI, MCP or HTTP.
+- `courses`: Interactive courses with jade-edu: a course JSON, a talking teacher, labs; new, validate and page from the CLI, MCP or HTTP.
 - `playbooks`: Portable YAML automation over Vault, Base, Kit and local commands; check, plan, run, approve.
 - `harness`: How every call is checked before it leaves: approvals, idempotency keys, task credentials, compatibility.
 - `python`: The SDK: Stack, Harness, Site, playbooks, docs, and asyncio wrappers.
