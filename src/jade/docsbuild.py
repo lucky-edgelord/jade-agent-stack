@@ -294,7 +294,7 @@ def examples_page(root: Path, tps: list[dict]) -> str:
             ("course/", "course-python", "A course", "jade-edu: Jade teaches with narrated slides, a concept map, quizzes, cards, an exam, and labs that check themselves: Python on MicroPython, JavaScript, a terminal, a webxdc app."),
             ("jade/", "jade", "Jade, the PNGtuber", "Jade Vault's default avatar: five expressions, blinking, lip-flap to speech, nods, leaning toward your pointer. No WebGL."),
             ("rpg/", "rpg", "An RPG", "jade-vn-engine: a tile scroller with NPCs and a minimap, Phantasy Star-style battles, faux-3D house tours, keypad and other minigames, lighting."),
-            ("vault/", "vault-live2d", "Jade's Vault", "jade-vn-engine: walk Jade through Vault Loci's painted vault, cycle the lights (L), the map (M), VHS (V), and meet a Live2D guest at the Comms Desk."),
+            ("vault/", "vault-live2d", "Jade's Vault", "jade-vn-engine: walk Jade through Vault Loci's painted vault, cycle the lights (L), the map (M), VHS (V), and meet Jade herself in Live2D at the Comms Desk."),
             ("demo/", "site", "A whole AI business", "A site from one YAML file with a pretend backend in your browser: sign up, subscribe, make API keys, join the waitlist, chat.")]
     cards = "".join(f'<a class="card demo" href="{h}"><img src="../img/demo-{i}.webp" alt="" loading="lazy"><b>{E(t)}</b><span>{E(d)}</span></a>' for h, i, t, d in live)
     body = markdown.render("# Live demos\n\nEverything below runs in your browser from the CDN, at the commits this toolkit pins, in Jade's Vault look. "

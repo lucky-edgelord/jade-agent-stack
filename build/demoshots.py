@@ -72,7 +72,7 @@ with sync_playwright() as p:
     pg.wait_for_timeout(600); shot(pg, "rpg")
     check("rpg", not errs, f"errors {errs[:2]}"); pg.close()
 
-    # Jade's Vault, with the Live2D guest
+    # Jade's Vault, with Jade in Live2D at the Comms Desk
     pg, errs = open_("vault/", (1280, 750))
     pg.wait_for_function("window.VN && (VN.state || VN.error)", timeout=60000)
     check("vault", not pg.evaluate("VN.error"), "engine boots from the CDN")
@@ -85,7 +85,7 @@ with sync_playwright() as p:
     pg.evaluate(f"VN.state.exec('pos.update({{\"x\": {l['s'][0]//24}, \"y\": {l['s'][1]//24}, \"rev\": pos[\"rev\"] + 1}})')"); pg.evaluate("VN.refresh()"); pg.wait_for_timeout(600)
     pg.keyboard.press("Enter"); pg.wait_for_timeout(600)
     for _ in range(6):
-        if pg.evaluate("VN.state.layers.master.some(x => x.tag === 'hiyori')"): break
+        if pg.evaluate("VN.state.layers.master.some(x => x.tag === 'jade')"): break
         pg.keyboard.press("Enter"); pg.wait_for_timeout(400)
     pg.wait_for_timeout(6000); shot(pg, "vault-live2d")
     check("vault", not errs, f"errors {errs[:3]}"); pg.close()

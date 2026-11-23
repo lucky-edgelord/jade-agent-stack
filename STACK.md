@@ -27,7 +27,7 @@ them at the commits in the table below. The canonical Kit is `lucky-edgelord/Jad
 | --- | --- |
 | kit | `https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-kit@v3.1.0/dist/jade-agent-kit.js` |
 | ui | `https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-ui-ux@929fe39/dist/jade-ui.js` |
-| vn | `https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-vn-engine@84ce781/engine/vn.js` |
+| vn | `https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-vn-engine@1268c01/engine/vn.js` |
 | edu | `https://cdn.jsdelivr.net/gh/lucky-edgelord/jade-edu@82e877f/src/edu.js` |
 
 ## What the CLI builds with (one commit each)
@@ -37,7 +37,7 @@ them at the commits in the table below. The canonical Kit is `lucky-edgelord/Jad
 | Part | Commit |
 | --- | --- |
 | ui | `lucky-edgelord/Jade-agent-ui-ux@929fe39282c56e65a1ab9c7f5bf609179613ae53` |
-| vn | `lucky-edgelord/jade-vn-engine@84ce781240c878fc0cba4519db33a43716cbbacd` |
+| vn | `lucky-edgelord/jade-vn-engine@1268c01e51aab7d65bc1648428105a279f84682b` |
 | edu | `lucky-edgelord/jade-edu@82e877ff5c825eff5af4707ace892e48a39bf740` |
 
 ## Python dependencies (one pin each)

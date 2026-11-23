@@ -8,12 +8,12 @@ toolkit gets:
 
     docs/examples/chat/     Jade Agent UI/UX: the agent chat, tools and approvals, page surfaces, dashboards (a demo agent; no model)
     docs/examples/rpg/      jade-vn-engine: tile maps, battles, faux-3D tours, minigames, lighting  (built by `jade vn build --cdn`)
-    docs/examples/vault/    jade-vn-engine: Jade's Vault, image maps, light levels, VHS, a Live2D guest
+    docs/examples/vault/    jade-vn-engine: Jade's Vault, image maps, light levels, VHS, and Jade herself in Live2D
     docs/examples/course/   jade-edu: a course with a talking Jade, quizzes and labs (Python on MicroPython, a terminal, webxdc)
     docs/examples/jade/     Jade Vault's PNGtuber avatar on its own: moods, speech, blinking, nods
 
-The games come from the engine's git history at the pinned commit (tracked files only). Live2D's runtime and sample model are
-not part of any of these repositories: the Vault demo loads them from Live2D's own servers when the scene plays."""
+The games come from the engine's git history at the pinned commit (tracked files only). The Live2D model in the Vault demo is
+Jade's own, from Jade Vault; Live2D's Cubism Core runtime is not ours to ship, so the game loads it from Live2D's site."""
 
 from __future__ import annotations
 
@@ -47,8 +47,6 @@ EDU = repo("JADE_EDU", "jade-edu")
 UI = repo("JADE_UI", "jade-agent-ui-ux", "Jade-agent-ui-ux")
 VAULT = repo("JADE_VAULT", "jade-vault")
 FONT = "https://cdn.jsdelivr.net/npm/@fontsource"
-LIVE2D_CORE = "https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"
-HIYORI = "https://cdn.jsdelivr.net/gh/Live2D/CubismWebSamples@develop/Samples/Resources/Hiyori/Hiyori.model3.json"
 
 # the frame every demo page shares: Jade's Vault look, a bar back to the docs
 ICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23040807'/%3E%3Crect x='5' y='5' width='6' height='6' fill='%231fe5a5'/%3E%3C/svg%3E"
@@ -106,14 +104,6 @@ def game(name: str, slug: str, tag: str, patch=None) -> dict:
     idx.write_text(html)
     shutil.rmtree(tmp, ignore_errors=True)
     return {"demo": slug, "files": sum(1 for _ in dest.rglob("*") if _.is_file()), "engine": r["engine"]}
-
-
-def vault_live2d(g: Path) -> None:
-    """the Live2D guest: Live2D's runtime and Hiyori sample load from Live2D's own servers (they are not ours to ship)"""
-    s = (g / "script.rpy").read_text()
-    s = s.replace('Live2D("hiyori/Hiyori.model3.json"', f'Live2D("{HIYORI}"', 1)
-    s = s.replace('define config.name = "Jade\'s Vault"', f'define config.name = "Jade\'s Vault"\ndefine config.live2d_core = "{LIVE2D_CORE}"', 1)
-    (g / "script.rpy").write_text(s)
 
 
 def chat() -> dict:
@@ -227,4 +217,4 @@ if __name__ == "__main__":
         elif t == "course": print(course())
         elif t == "jade": print(jade())
         elif t == "rpg": print(game("rpg-demo", "rpg", "jade-vn-engine · tile maps, battles, tours, minigames"))
-        elif t == "vault": print(game("jade-vault", "vault", "jade-vn-engine · Jade's Vault, lights, VHS, a Live2D guest", vault_live2d))
+        elif t == "vault": print(game("jade-vault", "vault", "jade-vn-engine · Jade's Vault, lights, VHS, Jade in Live2D"))

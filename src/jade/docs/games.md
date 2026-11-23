@@ -65,4 +65,4 @@ These GIFs come from the engine's sample games (see its [gallery](https://github
 ![A turn-based battle](https://lucky-edgelord.github.io/jade-agent-stack/img/rpg-battle.gif)
 ![A faux-3D tour: dragging to look around](https://lucky-edgelord.github.io/jade-agent-stack/img/tour-look.gif)
 ![Lighting levels in Jade's Vault](https://lucky-edgelord.github.io/jade-agent-stack/img/vault-lights.gif)
-![A Live2D character](https://lucky-edgelord.github.io/jade-agent-stack/img/live2d.jpg)
+![Jade in Live2D, the same model as in Jade Vault](https://lucky-edgelord.github.io/jade-agent-stack/img/live2d.jpg)
